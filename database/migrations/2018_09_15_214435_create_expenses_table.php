@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCloudQueriesTable extends Migration
+class CreateExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateCloudQueriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cloud_queries', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('type', 50);
+            $table->string('name', 50);
+            $table->bigInteger('value')->unsigned();
+            $table->string('description')->nullable()->default(NULL);
             $table->dateTime('created_at');
-            $table->text('query');
-            $table->dateTime('executed_at')->nullable()->default(NULL);
-            $table->bigInteger('user_logable_id')->unsigned()->nullable()->default(NULL);
-            $table->string('user_logable_type', 64);
         });
     }
 
@@ -30,6 +30,6 @@ class CreateCloudQueriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cloud_queries');
+        Schema::dropIfExists('expenses');
     }
 }

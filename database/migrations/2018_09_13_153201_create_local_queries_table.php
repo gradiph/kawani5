@@ -18,6 +18,8 @@ class CreateLocalQueriesTable extends Migration
             $table->dateTime('created_at');
             $table->text('query');
             $table->dateTime('uploaded_at')->nullable()->default(NULL);
+            $table->bigInteger('user_logable_id')->unsigned()->nullable()->default(NULL);
+            $table->string('user_logable_type', 64);
         });
     }
 

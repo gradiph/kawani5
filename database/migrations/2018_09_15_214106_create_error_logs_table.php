@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCloudQueriesTable extends Migration
+class CreateErrorLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateCloudQueriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cloud_queries', function (Blueprint $table) {
+        Schema::create('error_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
+			$table->unsignedBigInteger('user_id')->nullable();
+			$table->ipAddress('ip_address');
+			$table->string('description');
+			$table->string('action');
+			$table->mediumText('errorThrown');
+			$table->enum('status', ['Waiting', 'Process', 'Clear']);
             $table->dateTime('created_at');
-            $table->text('query');
-            $table->dateTime('executed_at')->nullable()->default(NULL);
-            $table->bigInteger('user_logable_id')->unsigned()->nullable()->default(NULL);
-            $table->string('user_logable_type', 64);
+            $table->dateTime('updated_at');
         });
     }
 
@@ -30,6 +33,6 @@ class CreateCloudQueriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cloud_queries');
+        Schema::dropIfExists('error_logs');
     }
 }
